@@ -7,7 +7,7 @@
 
 body {
   font-family: 'Arial', sans-serif;
-  background-color: #F1F4F8;
+  background-color: #F5F7FA;
   color: #333;
   line-height: 1.6;
   font-size: 16px;
@@ -17,29 +17,29 @@ body {
 
 /* Premium Header */
 header {
-  padding: 20px;
+  padding: 25px;
   background-color: #2C3E50;
   color: #ECF0F1;
-  border-radius: 12px;
+  border-radius: 15px;
   text-align: center;
-  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
 }
 
 header h1 {
-  font-size: 3rem;
+  font-size: 2.8rem;
   font-weight: 600;
   letter-spacing: 1px;
 }
 
 header p {
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: #BDC3C7;
   margin-top: 10px;
 }
 
 /* Button Styles */
 button {
-  padding: 12px 20px;
+  padding: 12px 22px;
   border-radius: 8px;
   font-size: 1.1rem;
   font-weight: 600;
@@ -68,17 +68,17 @@ button:focus {
 /* Form Styling */
 .form-container {
   background-color: #ffffff;
-  padding: 25px;
-  border-radius: 12px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-  margin-top: 30px;
+  padding: 30px;
+  border-radius: 15px;
+  box-shadow: 0 6px 15px rgba(0, 0, 0, 0.1);
+  margin-top: 40px;
   max-width: 900px;
   margin-left: auto;
   margin-right: auto;
 }
 
 .form-container .form-header {
-  font-size: 1.75rem;
+  font-size: 1.8rem;
   font-weight: 700;
   margin-bottom: 1.5rem;
   color: #2C3E50;
@@ -87,7 +87,7 @@ button:focus {
 /* Text Area and Inputs */
 textarea, input[type="text"], input[type="date"], input[type="file"] {
   width: 100%;
-  padding: 14px 18px;
+  padding: 14px 20px;
   border-radius: 10px;
   border: 1px solid #ddd;
   font-size: 1rem;
@@ -120,6 +120,30 @@ label[for="fileUpload"] {
 
 label[for="fileUpload"]:hover {
   background-color: #1f6fa6;
+}
+
+/* Upload Audio Section */
+.upload-audio-section {
+  display: flex;
+  flex-direction: column;
+  margin-top: 20px;
+}
+
+.upload-audio-section input[type="file"] {
+  padding: 12px 18px;
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  border-radius: 10px;
+  font-size: 1rem;
+  margin-bottom: 20px;
+}
+
+.upload-audio-section button {
+  background-color: #2ecc71;
+}
+
+.upload-audio-section button:hover {
+  background-color: #27ae60;
 }
 
 /* Tags Section */
