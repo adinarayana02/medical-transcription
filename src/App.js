@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import {
   User,
-  FileText,
   Mic,
   Save,
   Clock,
@@ -16,10 +15,12 @@ const App = () => {
     mrn: '',
     physician: ''
   });
-  const [audioFile, setAudioFile] = useState(null);
+  const [inputText, setInputText] = useState('');
   const [transcriptionText, setTranscriptionText] = useState('');
   const [specialtyTags, setSpecialtyTags] = useState([]);
   const [isRecording, setIsRecording] = useState(false);
+  const [showTranscription, setShowTranscription] = useState(false);
+  const [audioFile, setAudioFile] = useState(null);
 
   // Placeholder function for live audio recording
   const handleStartRecording = () => {
@@ -38,14 +39,14 @@ const App = () => {
     setPatientInfo(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleAudioUpload = (e) => {
-    const file = e.target.files[0];
-    setAudioFile(file);
-    // TODO: Implement audio processing
+  const handleInputTextChange = (e) => {
+    setInputText(e.target.value);
   };
 
-  const handleTranscriptionChange = (e) => {
-    setTranscriptionText(e.target.value);
+  const handleSummarize = () => {
+    // Implement summarization logic here
+    setTranscriptionText(inputText); // For now, just copy input text to transcription
+    setShowTranscription(true); // Show transcription area after summarization
   };
 
   const handleAddSpecialtyTag = (tag) => {
@@ -62,6 +63,14 @@ const App = () => {
     // TODO: Implement document generation
     console.log('Saving transcription', { patientInfo, transcriptionText, specialtyTags });
     alert('Transcription saved successfully!');
+  };
+
+  const handleAudioFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      setAudioFile(file);
+      // You can implement further logic to send this file for transcription if needed
+    }
   };
 
   return (
@@ -129,40 +138,49 @@ const App = () => {
                   {isRecording ? 'Stop Recording' : 'Start Recording'}
                 </button>
               </div>
-
-              {/* File Upload Button */}
-              <div>
+              {/* Upload Audio File */}
+              <div className="mt-4">
                 <input
                   type="file"
                   accept="audio/*"
-                  onChange={handleAudioUpload}
-                  className="hidden"
-                  id="audioUpload"
+                  onChange={handleAudioFileUpload}
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
                 />
-                <label
-                  htmlFor="audioUpload"
-                  className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center justify-center cursor-pointer"
-                >
-                  <FileText className="mr-2" /> Upload Audio File
-                </label>
                 {audioFile && (
-                  <div className="text-sm text-gray-600 bg-white p-2 rounded">
-                    Selected: {audioFile.name}
-                  </div>
+                  <p className="mt-2 text-sm text-gray-500">Uploaded File: {audioFile.name}</p>
                 )}
               </div>
-
-              {/* Transcription Text Area */}
-              <textarea
-                placeholder="Transcription Text"
-                value={transcriptionText}
-                onChange={handleTranscriptionChange}
-                rows={6}
-                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
-              />
             </div>
           </div>
         </div>
+
+              {/* Small Input Text Area */}
+              <textarea
+                placeholder="Enter your text here for summarization"
+                value={inputText}
+                onChange={handleInputTextChange}
+                rows={4}
+                className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500"
+              />
+
+              {/* Summarization Button */}
+              <button
+                onClick={handleSummarize}
+                className="px-6 py-3 bg-blue-500 text-white rounded-md hover:bg-blue-600"
+              >
+                Summarize
+              </button>
+
+              {/* Transcription Text Area */}
+              {showTranscription && (
+                <textarea
+                  placeholder="Transcription Text"
+                  value={transcriptionText}
+                  readOnly
+                  rows={6}
+                  className="w-full p-3 border rounded-md focus:ring-2 focus:ring-blue-500 mt-4"
+                />
+              )}
 
         {/* Specialty Tags Section */}
         <div className="bg-gray-100 p-6 rounded-lg mb-6">
