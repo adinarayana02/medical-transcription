@@ -5,7 +5,8 @@ import {
   Mic,
   Save,
   Clock,
-  Tags
+  Tags,
+  Headphones,
 } from 'lucide-react';
 
 const App = () => {
@@ -18,6 +19,19 @@ const App = () => {
   const [audioFile, setAudioFile] = useState(null);
   const [transcriptionText, setTranscriptionText] = useState('');
   const [specialtyTags, setSpecialtyTags] = useState([]);
+  const [isRecording, setIsRecording] = useState(false);
+
+  // Placeholder function for live audio recording
+  const handleStartRecording = () => {
+    setIsRecording(true);
+    // Implement audio recording logic
+  };
+
+  const handleStopRecording = () => {
+    setIsRecording(false);
+    // Implement stopping audio recording logic
+    // After stopping, send audio to transcription
+  };
 
   const handlePatientInfoChange = (e) => {
     const { name, value } = e.target;
@@ -105,26 +119,40 @@ const App = () => {
               <Mic className="mr-2 text-blue-600" /> Audio Transcription
             </h2>
             <div className="space-y-4">
-              <input
-                type="file"
-                accept="audio/*"
-                onChange={handleAudioUpload}
-                className="hidden"
-                id="audioUpload"
-              />
-              <label
-                htmlFor="audioUpload"
-                className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center justify-center cursor-pointer"
-              >
-                <FileText className="mr-2" /> Upload Audio File
-              </label>
+              {/* Record Button */}
+              <div className="flex gap-4">
+                <button
+                  onClick={isRecording ? handleStopRecording : handleStartRecording}
+                  className={`px-6 py-3 ${isRecording ? 'bg-red-500' : 'bg-blue-500'} text-white rounded-md hover:bg-blue-600`}
+                >
+                  {isRecording ? <Headphones className="mr-2" /> : <Mic className="mr-2" />}
+                  {isRecording ? 'Stop Recording' : 'Start Recording'}
+                </button>
+              </div>
 
-              {audioFile && (
-                <div className="text-sm text-gray-600 bg-white p-2 rounded">
-                  Selected: {audioFile.name}
-                </div>
-              )}
+              {/* File Upload Button */}
+              <div>
+                <input
+                  type="file"
+                  accept="audio/*"
+                  onChange={handleAudioUpload}
+                  className="hidden"
+                  id="audioUpload"
+                />
+                <label
+                  htmlFor="audioUpload"
+                  className="w-full p-3 bg-blue-500 text-white rounded-md hover:bg-blue-600 flex items-center justify-center cursor-pointer"
+                >
+                  <FileText className="mr-2" /> Upload Audio File
+                </label>
+                {audioFile && (
+                  <div className="text-sm text-gray-600 bg-white p-2 rounded">
+                    Selected: {audioFile.name}
+                  </div>
+                )}
+              </div>
 
+              {/* Transcription Text Area */}
               <textarea
                 placeholder="Transcription Text"
                 value={transcriptionText}
